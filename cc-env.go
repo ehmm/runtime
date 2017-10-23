@@ -97,9 +97,8 @@ type ShimInfo struct {
 
 // AgentInfo stores agent details
 type AgentInfo struct {
-	Type         string
-	Version      string
-	PauseBinPath string
+	Type    string
+	Version string
 }
 
 // DistroInfo stores host operating system distribution details.
@@ -248,17 +247,9 @@ func getShimInfo(config oci.RuntimeConfig) (ShimInfo, error) {
 }
 
 func getAgentInfo(config oci.RuntimeConfig) (AgentInfo, error) {
-	agentConfig, ok := config.AgentConfig.(vc.HyperConfig)
-	if !ok {
-		return AgentInfo{}, errors.New("cannot determine agent config")
-	}
-
-	agentBinPath := agentConfig.PauseBinPath
-
 	ccAgent := AgentInfo{
-		Type:         string(config.AgentType),
-		Version:      unknown,
-		PauseBinPath: agentBinPath,
+		Type:    string(config.AgentType),
+		Version: unknown,
 	}
 
 	return ccAgent, nil
